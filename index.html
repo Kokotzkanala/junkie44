@@ -1,27 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Testing Site</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Redirecting…</title>
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
-    }
-    h1 {
-      font-size: 3rem;
-      text-align: center;
-    }
+    :root { --bg:#f7fafc; --card:#fff; --muted:#6b7280; --accent:#0369a1; }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:#111; margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;}
+    .card{background:var(--card); padding:22px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.06); max-width:720px; width:94%;}
+    h1{margin:0 0 8px 0; font-size:18px;}
+    p{margin:8px 0; line-height:1.4;}
+    .count{font-weight:700; font-size:20px;}
+    .warn{background:#fff4e6;border:1px solid #ffd8a8;padding:10px;border-radius:8px;margin-top:12px;}
+    .actions{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;}
+    .btn{padding:10px 14px;border-radius:8px;text-decoration:none;border:0;cursor:pointer;font-weight:600;}
+    .btn-primary{background:var(--accent);color:#fff;}
+    .btn-muted{background:#e6eef6;color:#042f4a;}
+    small{color:var(--muted);display:block;margin-top:6px;}
+    code{background:#f3f4f6;padding:3px 6px;border-radius:6px;font-family:monospace;}
   </style>
 </head>
 <body>
-  <h1>Hello</h1>
+  <main class="card" role="main" aria-live="polite">
+    <h1>You are being redirected</h1>
+    <p>You'll be redirected to the download link in <span class="count" id="secs">10</span> seconds.</p>
+
+    <div class="warn" role="region" aria-label="Warning about ads">
+      <p><strong>Important:</strong> The destination may show ads. <strong>Do not click any ads.</strong> On the destination page follow the site’s visible buttons (for example: <em>"I'M A HUMAN"</em>, then <em>"GET LINK"</em>) manually to proceed.</p>
+      <small>We do not automate clicks — follow the site instructions carefully and only click the expected site buttons.</small>
+    </div>
+
+    <div class="actions">
+      <a id="proceedBtn" class="btn btn-primary" href="https://ouo.io/SM3feTV" rel="noopener noreferrer">Proceed now</a>
+      <button id="cancelBtn" class="btn btn-muted" type="button">Cancel</button>
+    </div>
+
+    <p style="margin-top:12px;"><strong>Download note:</strong> The file provider (GoFile) requires the password: <code>123</code></p>
+  </main>
+
+  <script>
+    (function () {
+      var secsEl = document.getElementById('secs');
+      var proceedUrl = "https://ouo.io/SM3feTV";
+      var count = 10;
+      var timer = setInterval(function () {
+        count--;
+        secsEl.textContent = count;
+        if (count <= 0) {
+          clearInterval(timer);
+          window.location.href = proceedUrl;
+        }
+      }, 1000);
+
+      document.getElementById('cancelBtn').addEventListener('click', function () {
+        clearInterval(timer);
+        secsEl.textContent = 'Canceled';
+        alert('Redirect canceled. You can proceed manually when ready.');
+      });
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="10;url=https://ouo.io/SM3feTV">
+    <div style="max-width:720px;margin:40px auto;padding:20px;background:#fff;border-radius:8px;text-align:center;">
+      <p><strong>No JavaScript detected.</strong></p>
+      <p>You will be redirected in 10 seconds. If not, <a href="https://ouo.io/SM3feTV">click here</a>.</p>
+    </div>
+  </noscript>
 </body>
 </html>
